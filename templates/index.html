@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crop Type Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #046530;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #ffffff;
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 30px 40px 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2d6a4f;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            color: #333;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 5px;
+            border: 1px solid #b7b7b7;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background: #2d6a4f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #40916c;
+        }
+        .result {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 18px;
+            color: #1b4332;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            let inputs = document.querySelectorAll('input[type="number"]');
+            for (let input of inputs) {
+                if (input.value === "" || isNaN(input.value)) {
+                    alert("Please fill all numeric fields correctly.");
+                    input.focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Crop Type Classification</h2>
+        <form action="/predict" method="post" onsubmit="return validateForm();">
+            <label>Nitrogen: <input type="number" step="any" name="Nitrogen" required></label>
+            <label>Phosphorus: <input type="number" step="any" name="Phosphorus" required></label>
+            <label>Potassium: <input type="number" step="any" name="Potassium" required></label>
+            <label>Temperature: <input type="number" step="any" name="Temperature" required></label>
+            <label>Humidity: <input type="number" step="any" name="Humidity" required></label>
+            <label>pH: <input type="number" step="any" name="pH" required></label>
+            <label>Rainfall: <input type="number" step="any" name="Rainfall" required></label>
+            <button type="submit">Classify</button>
+        </form>
+        {% if prediction_text %}
+            <div class="result">{{ prediction_text }}</div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
